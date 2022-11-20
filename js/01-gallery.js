@@ -5,7 +5,7 @@ console.log(galleryItems);
 
 const galleryEl = document.querySelector('.gallery');
 
-const createGallery = galleryItems.map(cardEl).join(" ");
+const createGallery = galleryItems.map(cardEl).join("");
 function cardEl({ preview, original, description }) {
   return `
     <div class="gallery__item">
