@@ -5,7 +5,7 @@ console.log(galleryItems);
 
 const galleryEl = document.querySelector('.gallery');
 
-const createCards = galleryItems.map(cardEl).join("");
+const createGallery = galleryItems.map(cardEl).join(" ");
 function cardEl({ preview, original, description }) {
   return `
     <div class="gallery__item">
@@ -19,6 +19,43 @@ function cardEl({ preview, original, description }) {
       </a>
  </div>`;
 }
-console.log(createCards);
+console.log(createGallery);
 
-galleryEl.insertAdjacentHTML('beforeend', createCards);
+galleryEl.insertAdjacentHTML('beforeend', createGallery);
+
+galleryEl.addEventListener('click', onClick);
+
+function onClick(e) {
+  e.preventDefault();
+
+  if (e.target.nodeName !== 'IMG') {
+    return;
+  }
+
+  const instance = basicLightbox.create(
+    `
+          <div class="modal">
+             <img
+                 class="modal__image"
+                  src="${e.target.dataset.source}"
+                />
+          </div> `,
+    {
+      onShow: (instance) => {
+        window.addEventListener("keydown", onEscPress);
+        instance.element().querySelector("img").onclick = instance.close;
+      },
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onEscPress);
+      },
+    }
+  );
+  
+  function onEscPress(e) {
+    if (e.code === "Escape") {
+      instance.close();
+    }
+  }
+
+  instance.show();
+}
