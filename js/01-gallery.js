@@ -34,16 +34,14 @@ function onClick(e) {
 
   const instance = basicLightbox.create(
     `
-          <div class="modal">
-             <img
-                 class="modal__image"
-                  src="${e.target.dataset.source}"
-                />
-          </div> `,
+      <img
+        class="modal__image"
+        src="${e.target.dataset.source}"
+      />
+    `,
     {
       onShow: (instance) => {
         window.addEventListener("keydown", onEscPress);
-        instance.element().querySelector("img").onclick = instance.close;
       },
       onClose: (instance) => {
         window.removeEventListener("keydown", onEscPress);
